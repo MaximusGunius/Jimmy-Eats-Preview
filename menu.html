@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Menu | Jimmy Eats</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -21,10 +21,16 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--light);
             color: var(--primary);
+            line-height: 1.6;
         }
 
         .serif {
@@ -33,30 +39,39 @@
 
         /* Navigation */
         .navbar {
-            padding: 1.5rem 0;
+            padding: 1rem 0;
             background: white;
             box-shadow: 0 2px 20px rgba(0,0,0,0.05);
         }
 
         .navbar-brand {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--primary) !important;
+        }
+
+        @media (min-width: 768px) {
+            .navbar-brand {
+                font-size: 1.8rem;
+            }
         }
 
         .nav-link {
             font-weight: 400;
             color: var(--primary) !important;
-            margin-left: 2rem;
+            margin-left: 0;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0;
             position: relative;
             transition: color 0.3s ease;
+            display: inline-block;
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 1px;
@@ -68,14 +83,28 @@
             width: 100%;
         }
 
+        @media (min-width: 992px) {
+            .nav-link {
+                margin-left: 2rem;
+                margin-top: 0;
+                padding: 0.5rem;
+            }
+        }
+
         /* Page Header */
         .page-header {
             background: var(--primary);
             color: white;
-            padding: 8rem 0 4rem;
+            padding: 6rem 0 3rem;
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .page-header {
+                padding: 8rem 0 4rem;
+            }
         }
 
         .page-header::before {
@@ -92,32 +121,75 @@
         .page-header-content {
             position: relative;
             z-index: 1;
+            padding: 0 1rem;
         }
 
         .page-header h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 1rem;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .page-header .lead {
+            font-size: 1rem;
+            opacity: 0.75;
+        }
+
+        @media (min-width: 768px) {
+            .page-header .lead {
+                font-size: 1.25rem;
+            }
         }
 
         /* Filter Tabs */
         .menu-filters {
-            padding: 2rem 0;
+            padding: 1.5rem 0;
             background: white;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .menu-filters .container {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-filters {
+                padding: 2rem 0;
+                overflow-x: visible;
+            }
+            .menu-filters .container {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0;
+            }
         }
 
         .filter-btn {
             background: transparent;
             border: 1px solid #ddd;
-            padding: 0.75rem 1.5rem;
-            margin: 0 0.5rem;
-            border-radius: 0;
+            padding: 0.625rem 1.25rem;
             font-weight: 500;
+            font-size: 0.875rem;
             transition: all 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .filter-btn {
+                margin: 0 0.25rem;
+                padding: 0.75rem 1.5rem;
+            }
         }
 
         .filter-btn:hover, .filter-btn.active {
@@ -128,29 +200,56 @@
 
         /* Menu Grid */
         .menu-section {
-            padding: 4rem 0;
+            padding: 2rem 0 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-section {
+                padding: 4rem 0;
+            }
         }
 
         .menu-category {
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-category {
+                margin-bottom: 4rem;
+            }
         }
 
         .category-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
             border-bottom: 2px solid var(--accent);
             display: inline-block;
+        }
+
+        @media (min-width: 768px) {
+            .category-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+            }
         }
 
         .menu-card {
             background: var(--card-bg);
             border: 1px solid #eee;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .menu-card {
+                padding: 2rem;
+                margin-bottom: 1.5rem;
+            }
         }
 
         .menu-card::before {
@@ -165,8 +264,15 @@
         }
 
         .menu-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        @media (min-width: 768px) {
+            .menu-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            }
         }
 
         .menu-card:hover::before {
@@ -176,40 +282,65 @@
         .menu-card-header {
             display: flex;
             justify-content: space-between;
-            align-items: start;
-            margin-bottom: 0.75rem;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .menu-card h4 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             margin: 0;
             font-weight: 600;
+            flex: 1;
+            min-width: 0;
+            word-wrap: break-word;
+        }
+
+        @media (min-width: 576px) {
+            .menu-card h4 {
+                font-size: 1.25rem;
+            }
         }
 
         .menu-card .price {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--accent);
             font-weight: 600;
             white-space: nowrap;
-            margin-left: 1rem;
+        }
+
+        @media (min-width: 576px) {
+            .menu-card .price {
+                font-size: 1.1rem;
+            }
         }
 
         .menu-card p {
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin: 0;
-            line-height: 1.6;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
 
         .tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 0.25rem 0.75rem;
+            padding: 0.25rem 0.625rem;
             background: var(--light);
-            margin-top: 1rem;
-            margin-right: 0.5rem;
+            margin-top: 0.75rem;
+            margin-right: 0.375rem;
+        }
+
+        @media (min-width: 576px) {
+            .tag {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.75rem;
+                margin-right: 0.5rem;
+            }
         }
 
         .tag.veg {
@@ -227,33 +358,28 @@
             color: #ef6c00;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .filter-btn {
-                margin: 0.25rem;
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-            }
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 2.5rem 0;
+        }
 
-            .menu-card {
-                padding: 1.5rem;
-            }
-
-            .nav-link {
-                margin-left: 0;
-                margin-top: 1rem;
+        @media (min-width: 768px) {
+            footer {
+                padding: 3rem 0;
             }
         }
 
         /* Animations */
         .fade-in {
-            animation: fadeIn 0.6s ease forwards;
+            animation: fadeIn 0.5s ease forwards;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -263,6 +389,19 @@
 
         .hidden {
             display: none;
+        }
+
+        /* Touch targets for mobile */
+        .btn, .nav-link, .filter-btn {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        @media (min-width: 768px) {
+            .btn, .nav-link {
+                min-height: auto;
+                min-width: auto;
+            }
         }
     </style>
 </head>
@@ -288,15 +427,15 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="page-header-content">
-            <p class="text-uppercase letter-spacing-3 mb-3" style="letter-spacing: 3px; color: var(--accent);">Westlands, Nairobi</p>
+            <p class="text-uppercase mb-2" style="letter-spacing: 3px; color: var(--accent); font-size: 0.8rem;">Westlands, Nairobi</p>
             <h1 class="serif">Our Menu</h1>
-            <p class="lead opacity-75">Seasonal dishes crafted with passion</p>
+            <p class="lead mb-0">Seasonal dishes crafted with passion</p>
         </div>
     </header>
 
     <!-- Filters -->
     <div class="menu-filters">
-        <div class="container text-center">
+        <div class="container">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="breakfast">Breakfast</button>
             <button class="filter-btn" data-filter="mains">Mains</button>
@@ -313,10 +452,10 @@
             <!-- Breakfast -->
             <div class="menu-category" data-category="breakfast">
                 <h3 class="category-title serif">Breakfast</h3>
-                <p class="text-muted mb-4">Served daily 7am - 11am</p>
-                <div class="row">
+                <p class="text-muted mb-3 small">Served daily 7am - 11am</p>
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Westlands Breakfast Bowl</h4>
                                 <span class="price">KSh 950</span>
@@ -327,7 +466,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Fluffy Pancakes Stack</h4>
                                 <span class="price">KSh 850</span>
@@ -337,7 +476,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Eggs Benedict</h4>
                                 <span class="price">KSh 1,100</span>
@@ -346,7 +485,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Breakfast Burrito</h4>
                                 <span class="price">KSh 900</span>
@@ -361,9 +500,9 @@
             <!-- Mains -->
             <div class="menu-category" data-category="mains">
                 <h3 class="category-title serif">Mains</h3>
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Grilled Salmon Fillet</h4>
                                 <span class="price">KSh 2,200</span>
@@ -373,7 +512,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Lamb Chops with Mint</h4>
                                 <span class="price">KSh 2,800</span>
@@ -382,7 +521,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Truffle Mushroom Pasta</h4>
                                 <span class="price">KSh 1,650</span>
@@ -392,7 +531,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Chicken Tikka Masala</h4>
                                 <span class="price">KSh 1,450</span>
@@ -402,7 +541,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Beef Tenderloin Steak</h4>
                                 <span class="price">KSh 3,200</span>
@@ -412,7 +551,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Grilled Prawns</h4>
                                 <span class="price">KSh 2,400</span>
@@ -426,9 +565,9 @@
             <!-- Burgers -->
             <div class="menu-category" data-category="burgers">
                 <h3 class="category-title serif">Burgers & Sandwiches</h3>
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Jimmy's Signature Burger</h4>
                                 <span class="price">KSh 1,450</span>
@@ -438,7 +577,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Crispy Chicken Burger</h4>
                                 <span class="price">KSh 1,250</span>
@@ -448,7 +587,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Mushroom Swiss Burger</h4>
                                 <span class="price">KSh 1,350</span>
@@ -458,7 +597,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Classic Club Sandwich</h4>
                                 <span class="price">KSh 1,100</span>
@@ -472,9 +611,9 @@
             <!-- Desserts -->
             <div class="menu-category" data-category="desserts">
                 <h3 class="category-title serif">Desserts</h3>
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Chocolate Lava Cake</h4>
                                 <span class="price">KSh 750</span>
@@ -484,7 +623,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>NY Cheesecake</h4>
                                 <span class="price">KSh 650</span>
@@ -493,7 +632,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Tiramisu</h4>
                                 <span class="price">KSh 700</span>
@@ -502,7 +641,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Mango Sorbet</h4>
                                 <span class="price">KSh 450</span>
@@ -517,9 +656,9 @@
             <!-- Drinks -->
             <div class="menu-category" data-category="drinks">
                 <h3 class="category-title serif">Drinks</h3>
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Jimmy's Special Coffee</h4>
                                 <span class="price">KSh 350</span>
@@ -528,7 +667,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Fresh Mint Lemonade</h4>
                                 <span class="price">KSh 400</span>
@@ -537,7 +676,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Classic Mojito</h4>
                                 <span class="price">KSh 850</span>
@@ -546,7 +685,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Old Fashioned</h4>
                                 <span class="price">KSh 950</span>
@@ -556,7 +695,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>Tusker Beer</h4>
                                 <span class="price">KSh 350</span>
@@ -565,7 +704,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="menu-card">
+                        <div class="menu-card h-100">
                             <div class="menu-card-header">
                                 <h4>House Red Wine</h4>
                                 <span class="price">KSh 600</span>
@@ -580,12 +719,12 @@
     </section>
 
     <!-- Footer -->
-    <footer style="background: var(--primary); color: white; padding: 3rem 0;">
+    <footer>
         <div class="container text-center">
-            <h4 class="serif mb-3">Jimmy Eats</h4>
-            <p class="opacity-75 mb-3">The Mirage, Chiromo Road, Westlands, Nairobi</p>
-            <p class="opacity-50 small">&copy; 2025 Jimmy Eats. All rights reserved.</p>
-            <a href="index.html" class="btn btn-outline-light btn-sm mt-3">Back to Home</a>
+            <h4 class="serif mb-2">Jimmy Eats</h4>
+            <p class="opacity-75 mb-2 small">The Mirage, Chiromo Road, Westlands, Nairobi</p>
+            <p class="opacity-50 small mb-3">&copy; 2024 Jimmy Eats. All rights reserved.</p>
+            <a href="index.html" class="btn btn-outline-light btn-sm">Back to Home</a>
         </div>
     </footer>
 
@@ -619,24 +758,6 @@
                     block: 'start' 
                 });
             });
-        });
-
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.menu-card').forEach(card => {
-            observer.observe(card);
         });
     </script>
 </body>
