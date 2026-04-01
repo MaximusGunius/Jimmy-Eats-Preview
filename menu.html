@@ -1,0 +1,643 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Jimmy Eats</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #c9a962;
+            --light: #faf9f7;
+            --gray: #6b6b6b;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        .navbar {
+            padding: 1.5rem 0;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary) !important;
+        }
+
+        .nav-link {
+            font-weight: 400;
+            color: var(--primary) !important;
+            margin-left: 2rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--primary);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80') center/cover;
+            opacity: 0.2;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Filter Tabs */
+        .menu-filters {
+            padding: 2rem 0;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #ddd;
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Menu Grid */
+        .menu-section {
+            padding: 4rem 0;
+        }
+
+        .menu-category {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid #eee;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .menu-card:hover::before {
+            height: 100%;
+        }
+
+        .menu-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .menu-card h4 {
+            font-size: 1.25rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .menu-card .price {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .menu-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.25rem 0.75rem;
+            background: var(--light);
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .tag.veg {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .tag.spicy {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .tag.chef {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-btn {
+                margin: 0.25rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .menu-card {
+                padding: 1.5rem;
+            }
+
+            .nav-link {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Jimmy Eats</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-header-content">
+            <p class="text-uppercase letter-spacing-3 mb-3" style="letter-spacing: 3px; color: var(--accent);">Westlands, Nairobi</p>
+            <h1 class="serif">Our Menu</h1>
+            <p class="lead opacity-75">Seasonal dishes crafted with passion</p>
+        </div>
+    </header>
+
+    <!-- Filters -->
+    <div class="menu-filters">
+        <div class="container text-center">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="breakfast">Breakfast</button>
+            <button class="filter-btn" data-filter="mains">Mains</button>
+            <button class="filter-btn" data-filter="burgers">Burgers</button>
+            <button class="filter-btn" data-filter="desserts">Desserts</button>
+            <button class="filter-btn" data-filter="drinks">Drinks</button>
+        </div>
+    </div>
+
+    <!-- Menu Content -->
+    <section class="menu-section">
+        <div class="container">
+
+            <!-- Breakfast -->
+            <div class="menu-category" data-category="breakfast">
+                <h3 class="category-title serif">Breakfast</h3>
+                <p class="text-muted mb-4">Served daily 7am - 11am</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Westlands Breakfast Bowl</h4>
+                                <span class="price">KSh 950</span>
+                            </div>
+                            <p>Poached eggs, avocado, grilled tomatoes, sautéed mushrooms, and sourdough toast</p>
+                            <span class="tag veg">Vegetarian</span>
+                            <span class="tag chef">Chef's Pick</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Fluffy Pancakes Stack</h4>
+                                <span class="price">KSh 850</span>
+                            </div>
+                            <p>Three-stack buttermilk pancakes with maple syrup, fresh berries, and whipped cream</p>
+                            <span class="tag veg">Vegetarian</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Eggs Benedict</h4>
+                                <span class="price">KSh 1,100</span>
+                            </div>
+                            <p>English muffin, smoked ham, poached eggs, and hollandaise sauce with hash browns</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Breakfast Burrito</h4>
+                                <span class="price">KSh 900</span>
+                            </div>
+                            <p>Scrambled eggs, chorizo, black beans, cheese, and salsa in a warm tortilla</p>
+                            <span class="tag spicy">Spicy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mains -->
+            <div class="menu-category" data-category="mains">
+                <h3 class="category-title serif">Mains</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Grilled Salmon Fillet</h4>
+                                <span class="price">KSh 2,200</span>
+                            </div>
+                            <p>Atlantic salmon with lemon butter sauce, seasonal vegetables, and herb rice</p>
+                            <span class="tag chef">Signature</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Lamb Chops with Mint</h4>
+                                <span class="price">KSh 2,800</span>
+                            </div>
+                            <p>New Zealand lamb chops, mint chimichurri, roasted potatoes, and grilled asparagus</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Truffle Mushroom Pasta</h4>
+                                <span class="price">KSh 1,650</span>
+                            </div>
+                            <p>Creamy truffle sauce, wild mushrooms, parmesan, and fresh tagliatelle</p>
+                            <span class="tag veg">Vegetarian</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Chicken Tikka Masala</h4>
+                                <span class="price">KSh 1,450</span>
+                            </div>
+                            <p>Tandoori chicken in rich tomato cream sauce, served with basmati rice and naan</p>
+                            <span class="tag spicy">Spicy</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Beef Tenderloin Steak</h4>
+                                <span class="price">KSh 3,200</span>
+                            </div>
+                            <p>250g grass-fed tenderloin, peppercorn sauce, mashed potatoes, and green beans</p>
+                            <span class="tag chef">Premium</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Grilled Prawns</h4>
+                                <span class="price">KSh 2,400</span>
+                            </div>
+                            <p>Jumbo prawns in garlic butter, served with saffron rice and citrus salad</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Burgers -->
+            <div class="menu-category" data-category="burgers">
+                <h3 class="category-title serif">Burgers & Sandwiches</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Jimmy's Signature Burger</h4>
+                                <span class="price">KSh 1,450</span>
+                            </div>
+                            <p>200g beef patty, caramelized onions, aged cheddar, special sauce, brioche bun</p>
+                            <span class="tag chef">Best Seller</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Crispy Chicken Burger</h4>
+                                <span class="price">KSh 1,250</span>
+                            </div>
+                            <p>Buttermilk fried chicken, coleslaw, pickles, and spicy mayo</p>
+                            <span class="tag spicy">Spicy</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Mushroom Swiss Burger</h4>
+                                <span class="price">KSh 1,350</span>
+                            </div>
+                            <p>Grilled portobello, swiss cheese, truffle aioli, and arugula on sourdough</p>
+                            <span class="tag veg">Vegetarian</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Classic Club Sandwich</h4>
+                                <span class="price">KSh 1,100</span>
+                            </div>
+                            <p>Triple-decker with turkey, bacon, lettuce, tomato, and mayo on toasted bread</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desserts -->
+            <div class="menu-category" data-category="desserts">
+                <h3 class="category-title serif">Desserts</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Chocolate Lava Cake</h4>
+                                <span class="price">KSh 750</span>
+                            </div>
+                            <p>Warm chocolate cake with molten center, served with vanilla ice cream</p>
+                            <span class="tag chef">Must Try</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>NY Cheesecake</h4>
+                                <span class="price">KSh 650</span>
+                            </div>
+                            <p>Creamy cheesecake with berry compote and graham cracker crust</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Tiramisu</h4>
+                                <span class="price">KSh 700</span>
+                            </div>
+                            <p>Classic Italian coffee-flavored dessert with mascarpone and cocoa</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Mango Sorbet</h4>
+                                <span class="price">KSh 450</span>
+                            </div>
+                            <p>Refreshing house-made mango sorbet with fresh mint</p>
+                            <span class="tag veg">Vegan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drinks -->
+            <div class="menu-category" data-category="drinks">
+                <h3 class="category-title serif">Drinks</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Jimmy's Special Coffee</h4>
+                                <span class="price">KSh 350</span>
+                            </div>
+                            <p>Single-origin Kenyan AA, freshly brewed to perfection</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Fresh Mint Lemonade</h4>
+                                <span class="price">KSh 400</span>
+                            </div>
+                            <p>House-made lemonade with fresh mint and a hint of ginger</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Classic Mojito</h4>
+                                <span class="price">KSh 850</span>
+                            </div>
+                            <p>White rum, fresh mint, lime, sugar, and soda water</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Old Fashioned</h4>
+                                <span class="price">KSh 950</span>
+                            </div>
+                            <p>Bourbon, bitters, sugar, and orange peel - the classic cocktail</p>
+                            <span class="tag chef">Premium</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>Tusker Beer</h4>
+                                <span class="price">KSh 350</span>
+                            </div>
+                            <p>Ice-cold Kenyan lager, the perfect accompaniment to any meal</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="menu-card">
+                            <div class="menu-card-header">
+                                <h4>House Red Wine</h4>
+                                <span class="price">KSh 600</span>
+                            </div>
+                            <p>Glass of our carefully selected South African Cabernet Sauvignon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary); color: white; padding: 3rem 0;">
+        <div class="container text-center">
+            <h4 class="serif mb-3">Jimmy Eats</h4>
+            <p class="opacity-75 mb-3">The Mirage, Chiromo Road, Westlands, Nairobi</p>
+            <p class="opacity-50 small">&copy; 2025 Jimmy Eats. All rights reserved.</p>
+            <a href="index.html" class="btn btn-outline-light btn-sm mt-3">Back to Home</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const categories = document.querySelectorAll('.menu-category');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                categories.forEach(category => {
+                    if (filter === 'all' || category.getAttribute('data-category') === filter) {
+                        category.classList.remove('hidden');
+                        category.classList.add('fade-in');
+                    } else {
+                        category.classList.add('hidden');
+                        category.classList.remove('fade-in');
+                    }
+                });
+
+                // Smooth scroll to menu section
+                document.querySelector('.menu-section').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.menu-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

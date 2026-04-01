@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimmy Eats | Modern Eatery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #c9a962;
+            --light: #faf9f7;
+            --gray: #6b6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        .navbar {
+            padding: 1.5rem 0;
+            background: transparent;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(250, 249, 247, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary) !important;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            font-weight: 400;
+            color: var(--primary) !important;
+            margin-left: 2rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d5 100%);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            padding: 2rem 0;
+        }
+
+        .hero-subtitle {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-text {
+            font-size: 1.125rem;
+            color: var(--gray);
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 98, 0.3);
+        }
+
+        .hero-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: fadeLeft 1s ease 0.4s forwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            filter: brightness(0.95);
+        }
+
+        .floating-card {
+            position: absolute;
+            bottom: -30px;
+            left: -50px;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .floating-card h4 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-subtitle {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        .feature-card {
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+        }
+
+        .feature-card:hover {
+            border-color: #eee;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        /* Menu Preview */
+        .menu-preview {
+            padding: 8rem 0;
+            background: var(--primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201,169,98,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            padding-left: 10px;
+            border-bottom-color: var(--accent);
+        }
+
+        .menu-item h4 {
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .menu-item .price {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .dots {
+            flex: 1;
+            border-bottom: 1px dotted rgba(255,255,255,0.3);
+            margin: 0 1rem;
+            position: relative;
+            top: -5px;
+        }
+
+        /* Gallery */
+        .gallery {
+            padding: 8rem 0;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            margin-right: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-bg {
+                width: 100%;
+                clip-path: none;
+                opacity: 0.3;
+            }
+
+            .floating-card {
+                left: 20px;
+                right: 20px;
+                bottom: -20px;
+            }
+
+            .nav-link {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Jimmy Eats</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <p class="hero-subtitle">Est. 2026 • Westlands, Nairobi</p>
+                    <h1 class="hero-title serif">Where Every Bite<br>Tells a Story</h1>
+                    <p class="hero-text">Experience modern comfort food crafted with local ingredients and global inspiration. A cozy corner in Westlands for those who appreciate the art of eating well.</p>
+                    <a href="menu.html" class="btn btn-primary-custom">View Menu</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Jimmy Eats Restaurant">
+                        <div class="floating-card">
+                            <h4 class="serif">Opening Hours</h4>
+                            <p class="mb-0">Mon - Sun: 7am - 10pm</p>
+                            <p class="mb-0">Happy Hour: 4pm - 7pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-subtitle">Why Choose Us</p>
+                <h2 class="section-title serif">The Jimmy Experience</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4 reveal">
+                    <div class="feature-card">
+                        <h4 class="serif mb-3">Farm Fresh</h4>
+                        <p class="text-muted">Sourced daily from local Kenyan farms. We believe in supporting our community while serving you the freshest ingredients.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="feature-card">
+                        <h4 class="serif mb-3">Master Chefs</h4>
+                        <p class="text-muted">Our culinary team brings together 40+ years of combined experience from Nairobi's finest kitchens.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="feature-card">
+                        <h4 class="serif mb-3">Curated Drinks</h4>
+                        <p class="text-muted">From Kenyan coffee to international wines, our beverage program complements every dish perfectly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview -->
+    <section class="menu-preview">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 reveal">
+                    <p class="section-subtitle" style="color: var(--accent);">Chef's Selection</p>
+                    <h2 class="section-title serif mb-5">Featured Dishes</h2>
+
+                    <div class="menu-item">
+                        <h4>Jimmy's Signature Burger</h4>
+                        <span class="dots"></span>
+                        <span class="price">KSh 1,450</span>
+                    </div>
+                    <div class="menu-item">
+                        <h4>Grilled Salmon Fillet</h4>
+                        <span class="dots"></span>
+                        <span class="price">KSh 2,200</span>
+                    </div>
+                    <div class="menu-item">
+                        <h4>Truffle Mushroom Pasta</h4>
+                        <span class="dots"></span>
+                        <span class="price">KSh 1,650</span>
+                    </div>
+                    <div class="menu-item">
+                        <h4>Lamb Chops with Mint</h4>
+                        <span class="dots"></span>
+                        <span class="price">KSh 2,800</span>
+                    </div>
+                    <div class="menu-item">
+                        <h4>Westlands Breakfast Bowl</h4>
+                        <span class="dots"></span>
+                        <span class="price">KSh 950</span>
+                    </div>
+
+                    <a href="menu.html" class="btn btn-outline-light mt-4 px-4 py-2">View Full Menu</a>
+                </div>
+                <div class="col-lg-6 d-flex align-items-center justify-content-center reveal">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Featured dish" class="img-fluid rounded" style="opacity: 0.9;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery">
+        <div class="container-fluid px-4">
+            <div class="section-header reveal">
+                <p class="section-subtitle">The Vibe</p>
+                <h2 class="section-title serif">Inside Jimmy's</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 reveal">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="Restaurant interior">
+                        <div class="gallery-overlay">
+                            <h5 class="serif">Cozy Interior</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt="Food plating">
+                        <div class="gallery-overlay">
+                            <h5 class="serif">Art on a Plate</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" alt="Cocktails">
+                        <div class="gallery-overlay">
+                            <h5 class="serif">Craft Cocktails</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-brand serif">Jimmy Eats</h3>
+                    <p class="text-light opacity-75">Modern comfort food in the heart of Westlands. Come hungry, leave happy.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="bi bi-instagram"></i> IG</a>
+                        <a href="#"><i class="bi bi-facebook"></i> FB</a>
+                        <a href="#"><i class="bi bi-twitter"></i> X</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-3">Visit Us</h5>
+                    <p class="mb-1">The Mirage, Chiromo Road</p>
+                    <p class="mb-1">Westlands, Nairobi</p>
+                    <p class="opacity-75">+254 712 345 678</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-3">Newsletter</h5>
+                    <p class="opacity-75 small">Get updates on specials and events.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-light" type="button">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 opacity-25">
+            <div class="text-center opacity-50 small">
+                <p>&copy; 2026 Jimmy Eats. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Trigger once on load
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
